@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hacer Merge - Aprendé Git</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Hacer Merge</h1>
+        <p>Entendé cómo fusionar ramas en Git</p>
+        <nav>
+            <ul>
+                <li><a href="index.html">Volver al Inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>¿Qué es un Merge?</h2>
+            <p>Un merge combina los cambios de una rama en otra. Es útil para integrar nuevas características en la rama principal.</p>
+            <p>Comando: <code>git merge nombre-rama</code></p>
+        </section>
+        <section>
+            <h2>Simulación</h2>
+            <p>Fusiona una rama en la rama actual.</p>
+            <select id="merge-branch">
+                <option value="feature">feature</option>
+            </select>
+            <button id="simulate-merge">Hacer Merge</button>
+            <div class="visual" id="merge-visual">
+                <p>Estado: <span id="merge-status">Rama actual: main</span></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Proyecto educativo - Git visual</p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Commit - Aprendé Git</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Agregar Commit</h1>
+        <p>Entendé cómo funciona un commit en Git</p>
+        <nav>
+            <ul>
+                <li><a href="index.html">Volver al Inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>¿Qué es un Commit?</h2>
+            <p>Un commit es una instantánea de tu proyecto en un momento dado. Guarda todos los cambios realizados en los archivos rastreados.</p>
+            <p>Comando: <code>git commit -m "Mensaje del commit"</code></p>
+        </section>
+        <section>
+            <h2>Simulación</h2>
+            <p>Imagina que tienes cambios en tu código. Haz clic para "agregar" un commit.</p>
+            <button id="simulate-commit">Agregar Commit</button>
+            <div class="visual" id="commit-visual">
+                <p>Commits actuales: <span id="commits">0</span></p>
+                <ul id="commit-list"></ul>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Proyecto educativo - Git visual</p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Rama - Aprendé Git</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Crear Rama</h1>
+        <p>Entendé cómo crear y trabajar con ramas en Git</p>
+        <nav>
+            <ul>
+                <li><a href="index.html">Volver al Inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>¿Qué es una Rama?</h2>
+            <p>Una rama es una línea de desarrollo independiente. Te permite trabajar en nuevas características sin afectar la rama principal.</p>
+            <p>Comando: <code>git branch nombre-rama</code></p>
+        </section>
+        <section>
+            <h2>Simulación</h2>
+            <p>Crea una nueva rama desde la rama actual.</p>
+            <input type="text" id="branch-name" placeholder="Nombre de la rama" />
+            <button id="simulate-branch">Crear Rama</button>
+            <div class="visual" id="branch-visual">
+                <p>Ramas: <span id="branches">main</span></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Proyecto educativo - Git visual</p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
