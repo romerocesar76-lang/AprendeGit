@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aprendé Git Visualmente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS (lo agregaremos después) -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <h1>Aprendé Git Visualmente</h1>
+        <p>Entendé commits, ramas y merges como un mapa interactivo</p>
+
+        <!-- NAV -->
+        <nav>
+            <ul>
+                <li><a href="#git">¿Qué es Git?</a></li>
+                <li><a href="#commit">Commit</a></li>
+                <li><a href="#branch">Branch</a></li>
+                <li><a href="#merge">Merge</a></li>
+                <li><a href="#checkout">Checkout</a></li>
+                <li><a href="#simulador">Simulador</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ================= MAIN ================= -->
+    <main>
+
+        <!-- ===== SECCIÓN: ¿QUÉ ES GIT? ===== -->
+        <section id="git">
+            <h2>¿Qué es Git?</h2>
+            <p>
+                Git es un sistema de control de versiones que guarda el historial de cambios de tu proyecto.
+                Funciona como una línea de tiempo que te permite volver atrás y trabajar en paralelo sin perder información.
+            </p>
+
+            <!-- Visual -->
+            <div class="visual" id="git-visual">
+                <!-- después lo reemplazamos con gráfico -->
+            </div>
+        </section>
+
+
+        <!-- ===== SECCIÓN: COMMIT ===== -->
+        <section id="commit">
+            <h2>¿Qué es un Commit?</h2>
+            <p>
+                Un commit es una captura de tu proyecto en un momento específico.
+                Guarda los cambios realizados.
+            </p>
+
+            <!-- Controles -->
+            <div class="controls">
+                <button id="btn-commit">Agregar commit</button>
+            </div>
+
+            <!-- Visual -->
+            <div class="visual" id="commit-visual">
+                <!-- línea de commits -->
+            </div>
+        </section>
+
+
+        <!-- ===== SECCIÓN: BRANCH ===== -->
+        <section id="branch">
+            <h2>¿Qué es una Branch?</h2>
+            <p>
+                Una branch es una línea paralela donde podés trabajar sin afectar la principal.
+            </p>
+
+            <!-- Controles -->
+            <div class="controls">
+                <button id="btn-branch">Crear rama</button>
+            </div>
+
+            <!-- Visual -->
+            <div class="visual" id="branch-visual">
+                <!-- gráfico de ramas -->
+            </div>
+        </section>
+
+
+        <!-- ===== SECCIÓN: MERGE ===== -->
+        <section id="merge">
+            <h2>¿Qué es un Merge?</h2>
+            <p>
+                Un merge combina los cambios de una rama en otra.
+            </p>
+
+            <!-- Controles -->
+            <div class="controls">
+                <button id="btn-merge">Hacer merge</button>
+            </div>
+
+            <!-- Visual -->
+            <div class="visual" id="merge-visual">
+                <!-- gráfico de merge -->
+            </div>
+        </section>
+
+
+        <!-- ===== SECCIÓN: CHECKOUT ===== -->
+        <section id="checkout">
+            <h2>¿Qué es Checkout?</h2>
+            <p>
+                Checkout permite moverte entre ramas o commits.
+                Es como cambiar de línea de trabajo dentro del proyecto.
+            </p>
+
+            <!-- Controles -->
+            <div class="controls">
+                <button id="btn-checkout-main">Ir a main</button>
+                <button id="btn-checkout-feature">Ir a feature</button>
+            </div>
+
+            <!-- Visual -->
+            <div class="visual" id="checkout-visual">
+                <!-- indicador HEAD -->
+            </div>
+        </section>
+
+
+        <!-- ===== SECCIÓN: SIMULADOR ===== -->
+        <section id="simulador">
+            <h2>Simulador de Git</h2>
+            <p>
+                Probá cómo funcionan los comandos de Git en un entorno interactivo.
+            </p>
+
+            <!-- Panel de comandos -->
+            <div class="controls simulador-controls">
+                <button id="sim-commit">git commit</button>
+                <button id="sim-branch">git branch</button>
+                <button id="sim-checkout">git checkout</button>
+                <button id="sim-merge">git merge</button>
+            </div>
+
+            <!-- Estado -->
+            <div class="status">
+                <p><strong>Rama actual:</strong> <span id="current-branch">main</span></p>
+            </div>
+
+            <!-- Visual principal -->
+            <div class="visual simulador-visual" id="simulador-visual">
+                <!-- grafo completo -->
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <p>Proyecto educativo - Git visual</p>
+    </footer>
+
+    <!-- JS (lo agregaremos después) -->
+    <script src="app.js"></script>
+
+</body>
+</html>
