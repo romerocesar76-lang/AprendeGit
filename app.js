@@ -27,6 +27,26 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('sim-merge').addEventListener('click', handleMerge);
         document.getElementById('sim-reset').addEventListener('click', handleReset);
     }
+
+    const commandInput = document.getElementById('command-input');
+    const commandSubmit = document.getElementById('command-submit');
+
+    if (commandInput) {
+        commandInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                executeCommand(commandInput.value);
+            }
+        });
+    }
+
+    if (commandSubmit) {
+        commandSubmit.addEventListener('click', function() {
+            if (commandInput) {
+                executeCommand(commandInput.value);
+            }
+        });
+    }
     
     // Para las páginas individuales (commit.html, branch.html, etc.)
     if (document.getElementById('simulate-commit')) {
@@ -83,8 +103,10 @@ function setupSimulator() {
     redrawSimulator();
 }
 
-function handleCommit() {
-    const message = prompt('Escribe el mensaje del commit:');
+function handleCommit(message) {
+    if (message === undefined) {
+        message = prompt('Escribe el mensaje del commit:');
+    }
     if (message === null) return;
     
     const newCommit = {
@@ -101,15 +123,16 @@ function handleCommit() {
     redrawSimulator();
 }
 
-function handleBranch() {
-    const branchName = prompt('Nombre de la rama:');
+function handleBranch(branchName) {
+    if (branchName === undefined) {
+        branchName = prompt('Nombre de la rama:');
+    }
     if (branchName === null || branchName === '') return;
     if (gitSimulator.branches[branchName]) {
         alert('La rama ya existe');
         return;
     }
     
-    // Crear nueva rama desde el commit actual
     const colorIndex = Object.keys(gitSimulator.branches).length % gitSimulator.branchColors.length;
     gitSimulator.branches[branchName] = {
         color: gitSimulator.branchColors[colorIndex],
@@ -121,8 +144,10 @@ function handleBranch() {
     redrawSimulator();
 }
 
-function handleCheckout() {
-    const branchName = prompt('Rama a cambiar (' + Object.keys(gitSimulator.branches).join(', ') + '):');
+function handleCheckout(branchName) {
+    if (branchName === undefined) {
+        branchName = prompt('Rama a cambiar (' + Object.keys(gitSimulator.branches).join(', ') + '):');
+    }
     if (branchName === null) return;
     if (!gitSimulator.branches[branchName]) {
         alert('La rama no existe');
@@ -134,8 +159,10 @@ function handleCheckout() {
     redrawSimulator();
 }
 
-function handleMerge() {
-    const branchName = prompt('Rama a fusionar:');
+function handleMerge(branchName) {
+    if (branchName === undefined) {
+        branchName = prompt('Rama a fusionar:');
+    }
     if (branchName === null) return;
     if (!gitSimulator.branches[branchName]) {
         alert('La rama no existe');
@@ -164,6 +191,50 @@ function handleMerge() {
     delete gitSimulator.branches[branchName];
     gitSimulator.history.push(`git merge ${branchName}`);
     redrawSimulator();
+}
+
+function executeCommand(commandText) {
+    const input = commandText.trim();
+    if (!input) return;
+
+    const commitPattern = /^git\s+commit\s+-m\s+(?:"([^"]+)"|'([^']+)'|(.+))$/i;
+    const branchPattern = /^git\s+branch\s+(?:"([^"]+)"|'([^']+)'|(\S+))$/i;
+    const checkoutPattern = /^git\s+checkout\s+(?:"([^"]+)"|'([^']+)'|(\S+))$/i;
+    const mergePattern = /^git\s+merge\s+(?:"([^"]+)"|'([^']+)'|(\S+))$/i;
+
+    let match = input.match(commitPattern);
+    if (match) {
+        const message = match[1] || match[2] || match[3] || '';
+        handleCommit(message);
+        document.getElementById('command-input').value = '';
+        return;
+    }
+
+    match = input.match(branchPattern);
+    if (match) {
+        const name = match[1] || match[2] || match[3];
+        handleBranch(name);
+        document.getElementById('command-input').value = '';
+        return;
+    }
+
+    match = input.match(checkoutPattern);
+    if (match) {
+        const name = match[1] || match[2] || match[3];
+        handleCheckout(name);
+        document.getElementById('command-input').value = '';
+        return;
+    }
+
+    match = input.match(mergePattern);
+    if (match) {
+        const name = match[1] || match[2] || match[3];
+        handleMerge(name);
+        document.getElementById('command-input').value = '';
+        return;
+    }
+
+    alert('Error: comando no reconocido');
 }
 
 function handleReset() {

@@ -130,6 +130,35 @@ footer {
     overflow-y: auto;
 }
 
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.command-panel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.command-panel label {
+    font-weight: bold;
+}
+
+#command-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
 .sidebar-panel h3 {
     margin: 0 0 10px 0;
     font-size: 14px;

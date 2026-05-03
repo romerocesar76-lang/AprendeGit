@@ -177,8 +177,15 @@
 
             <!-- Estado -->
             <div class="status" style="margin-top: 20px;">
-                <p><strong>Rama actual:</strong> <span id="current-branch-sim">main</span></p>
-                <p><strong>Commits totales:</strong> <span id="total-commits">0</span></p>
+                <div class="status-row">
+                    <p><strong>Rama actual:</strong> <span id="current-branch-sim">main</span></p>
+                    <p><strong>Commits totales:</strong> <span id="total-commits">0</span></p>
+                </div>
+                <div class="command-panel">
+                    <label for="command-input">Ingrese el comando $</label>
+                    <input id="command-input" type="text" placeholder='git commit -m "texto"' />
+                    <button id="command-submit" class="button">Ejecutar</button>
+                </div>
             </div>
         </section>
 
