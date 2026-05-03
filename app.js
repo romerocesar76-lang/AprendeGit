@@ -146,17 +146,22 @@ function handleMerge() {
         return;
     }
     
-    // Simular merge: los commits de la rama se integran a la rama actual
-    const sourceCommits = gitSimulator.branches[branchName].commits;
+    const sourceBranch = gitSimulator.branches[branchName];
     const targetBranch = gitSimulator.branches[gitSimulator.currentBranch];
+    const sourceCommits = sourceBranch.commits;
     
     for (let commitId of sourceCommits) {
         if (!targetBranch.commits.includes(commitId)) {
             targetBranch.commits.push(commitId);
         }
+        const commit = gitSimulator.commits.find(c => c.id === commitId);
+        if (commit) {
+            commit.branch = gitSimulator.currentBranch;
+        }
     }
     
-    targetBranch.head = gitSimulator.branches[branchName].head;
+    targetBranch.head = sourceBranch.head;
+    delete gitSimulator.branches[branchName];
     gitSimulator.history.push(`git merge ${branchName}`);
     redrawSimulator();
 }
@@ -190,6 +195,14 @@ function drawGitGraph() {
     const canvas = document.getElementById('git-canvas');
     if (!canvas) return;
     
+    const commitRadius = 8;
+    const verticalSpacing = 60;
+    const startX = 50;
+    const startY = 30;
+    const branchNames = Object.keys(gitSimulator.branches);
+    
+    canvas.width = Math.max(600, startX + branchNames.length * 80 + 100);
+    canvas.height = Math.max(500, startY + gitSimulator.commits.length * verticalSpacing + 50);
     const ctx = canvas.getContext('2d');
     
     // Limpiar canvas
@@ -198,29 +211,33 @@ function drawGitGraph() {
     
     if (gitSimulator.commits.length === 0) return;
     
-    const commitRadius = 8;
-    const verticalSpacing = 60;
-    const startX = 50;
-    const startY = 30;
-    
     // Dibujar líneas de ramas
-    for (let branchName in gitSimulator.branches) {
+    for (let branchName of branchNames) {
         const branch = gitSimulator.branches[branchName];
         ctx.strokeStyle = branch.color;
         ctx.lineWidth = 3;
-        
-        for (let i = 0; i < branch.commits.length - 1; i++) {
-            const commitId = branch.commits[i];
-            const nextCommitId = branch.commits[i + 1];
-            
-            const x1 = startX + (Object.keys(gitSimulator.branches).indexOf(branchName) * 80);
+        const x = startX + (branchNames.indexOf(branchName) * 80);
+
+        if (branch.commits.length > 1) {
+            for (let i = 0; i < branch.commits.length - 1; i++) {
+                const commitId = branch.commits[i];
+                const nextCommitId = branch.commits[i + 1];
+
+                const y1 = startY + (gitSimulator.commits.findIndex(c => c.id === commitId) * verticalSpacing);
+                const y2 = startY + (gitSimulator.commits.findIndex(c => c.id === nextCommitId) * verticalSpacing);
+
+                ctx.beginPath();
+                ctx.moveTo(x, y1);
+                ctx.lineTo(x, y2);
+                ctx.stroke();
+            }
+        } else if (branch.commits.length === 1) {
+            const commitId = branch.commits[0];
             const y1 = startY + (gitSimulator.commits.findIndex(c => c.id === commitId) * verticalSpacing);
-            const x2 = startX + (Object.keys(gitSimulator.branches).indexOf(branchName) * 80);
-            const y2 = startY + (gitSimulator.commits.findIndex(c => c.id === nextCommitId) * verticalSpacing);
-            
+            const y2 = y1 + 20;
             ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
+            ctx.moveTo(x, y1);
+            ctx.lineTo(x, y2);
             ctx.stroke();
         }
     }
@@ -247,12 +264,6 @@ function drawGitGraph() {
         ctx.textBaseline = 'middle';
         ctx.fillText(commit.id, x, y);
         
-        // Dibujar etiqueta de commit
-        ctx.fillStyle = '#333';
-        ctx.font = '11px Arial';
-        ctx.textAlign = 'left';
-        ctx.fillText(commit.message.substring(0, 20), x + 20, y);
-        
         // Marcar HEAD si está en esta rama y commit
         if (gitSimulator.currentBranch === commit.branch && 
             branch.head === commit.id) {
@@ -262,23 +273,6 @@ function drawGitGraph() {
             ctx.arc(x, y, commitRadius + 5, 0, 2 * Math.PI);
             ctx.stroke();
         }
-    }
-    
-    // Leyenda de ramas
-    ctx.font = '12px Arial';
-    ctx.textAlign = 'left';
-    let legendY = canvas.height - 100;
-    ctx.fillStyle = '#333';
-    ctx.fillText('Ramas:', 20, legendY);
-    
-    let branchIndex = 0;
-    for (let branchName in gitSimulator.branches) {
-        const branch = gitSimulator.branches[branchName];
-        ctx.fillStyle = branch.color;
-        ctx.fillRect(20, legendY + 15 + (branchIndex * 20), 15, 15);
-        ctx.fillStyle = '#333';
-        ctx.fillText(branchName, 40, legendY + 27 + (branchIndex * 20));
-        branchIndex++;
     }
 }
 
